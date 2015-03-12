@@ -38,7 +38,8 @@ class UploadBehavior extends Behavior {
                 $entity->unsetProperty($config['field']);
             } else {
 
-                if ($originalFilePath = $entity->getOriginal('img')) {
+                if (($entity->get($config['field']) != $entity->getOriginal($config['field']))) {
+                    $originalFilePath = $entity->getOriginal($config['field']);
                     $this->_delete($originalFilePath);
                 }
                 $filePath = $this->_moveFile($field);
@@ -52,10 +53,11 @@ class UploadBehavior extends Behavior {
                     $entity->unsetProperty($config['field']);
                 } else {
 
-                    if ($originalFilePath = $entity->getOriginal('img')) {
+                    if (($entity->get($config['field']) != $entity->getOriginal($config['field']))) {
+                        $originalFilePath = $entity->getOriginal($config['field']);
                         $this->_delete($originalFilePath);
                     }
-                    $filePath = $this->_moveField($field);
+                    $filePath = $this->_moveFile($field);
                     $entity->set($config['field'], $filePath);
                 }
             }
